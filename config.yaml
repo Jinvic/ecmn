@@ -1,0 +1,19 @@
+server:
+  port: 8080
+  mode: release
+
+webhook:
+  secret: "your-webhook-secret"
+
+logging:
+  level: "info"
+  format: "json"
+
+smtp:
+  host: "smtp.example.com"
+  port: 587
+  username: "noreply@example.com"
+  password: "smtp-password"
+  from: "noreply@example.com"
+  to:
+    - "admin@example.com"

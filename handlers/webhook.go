@@ -1,0 +1,55 @@
+package handlers
+
+import (
+	"net/http"
+
+	"ecmn/logger"
+	"ecmn/models"
+	"ecmn/services"
+
+	"github.com/gin-gonic/gin"
+)
+
+const (
+	HeaderEvent     = "X-Ech0-Event"
+	HeaderEventID   = "X-Ech0-Event-ID"
+	HeaderTimestamp = "X-Ech0-Timestamp"
+)
+
+type WebhookHandler struct{}
+
+func NewWebhookHandler() *WebhookHandler {
+	return &WebhookHandler{}
+}
+
+func (h *WebhookHandler) HandleWebhook(c *gin.Context) {
+	var payload models.WebhookPayload
+	if err := c.ShouldBindJSON(&payload); err != nil {
+		logger.Error("Failed to parse webhook payload", logger.Err(err))
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid payload"})
+		return
+	}
+
+	eventID := c.GetHeader(HeaderEventID)
+	timestamp := c.GetHeader(HeaderTimestamp)
+	event := c.GetHeader(HeaderEvent)
+
+	logger.Info("Received webhook",
+		logger.String("event", event),
+		logger.String("event_id", eventID),
+		logger.String("timestamp", timestamp),
+		logger.String("topic", payload.Topic),
+		logger.String("event_name", payload.EventName))
+
+	switch payload.Topic {
+	case models.TopicCommentCreated:
+		mailService := services.NewMailService()
+		mailService.SendCommentNotificationEmail()
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message":    "webhook received",
+		"topic":      payload.Topic,
+		"event_name": payload.EventName,
+	})
+}
