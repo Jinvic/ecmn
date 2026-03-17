@@ -16,10 +16,14 @@ const (
 	HeaderTimestamp = "X-Ech0-Timestamp"
 )
 
-type WebhookHandler struct{}
+type WebhookHandler struct{
+	mailService *services.MailService
+}
 
 func NewWebhookHandler() *WebhookHandler {
-	return &WebhookHandler{}
+	return &WebhookHandler{
+		mailService: services.NewMailService(),
+	}
 }
 
 func (h *WebhookHandler) HandleWebhook(c *gin.Context) {
@@ -43,8 +47,11 @@ func (h *WebhookHandler) HandleWebhook(c *gin.Context) {
 
 	switch payload.Topic {
 	case models.TopicCommentCreated:
-		mailService := services.NewMailService()
-		mailService.SendCommentNotificationEmail()
+		go func() {
+			if err := h.mailService.SendCommentNotificationEmail(); err != nil {
+				logger.Error("Failed to send comment notification email", logger.Err(err))
+			}
+		}()
 	}
 
 	c.JSON(http.StatusOK, gin.H{

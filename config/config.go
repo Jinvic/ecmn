@@ -12,6 +12,7 @@ type Config struct {
 	Webhook WebhookConfig `yaml:"webhook"`
 	Logging LoggingConfig `yaml:"logging"`
 	SMTP    SMTPConfig    `yaml:"smtp"`
+	API     APIConfig     `yaml:"api"`
 }
 
 type ServerConfig struct {
@@ -36,6 +37,12 @@ type SMTPConfig struct {
 	Password string   `yaml:"password"`
 	From     string   `yaml:"from"`
 	To       []string `yaml:"to"`
+}
+
+type APIConfig struct {
+	BaseURL string `yaml:"base_url"`
+	Token   string `yaml:"token"`
+	Timeout int    `yaml:"timeout"`
 }
 
 var AppConfig *Config
