@@ -7,8 +7,8 @@
 ### Docker Compose
 
 ```bash
-curl -L https://raw.githubusercontent.com/Jinvic/ecmn/main/docker-compose.yml -o docker-compose.yml
-curl -L https://raw.githubusercontent.com/Jinvic/ecmn/main/config.yaml.example -o config.yaml
+curl -L https://raw.githubusercontent.com/Jinvic/ecmn/refs/heads/master/docker-compose.yml -o docker-compose.yml
+curl -L https://raw.githubusercontent.com/Jinvic/ecmn/refs/heads/master/config.yaml.example -o config.yaml
 docker-compose up -d
 ```
 
@@ -17,6 +17,7 @@ docker-compose up -d
 镜像地址：`jinvic/ecmn`
 
 ```bash
+curl -L https://raw.githubusercontent.com/Jinvic/ecmn/refs/heads/master/config.yaml.example -o config.yaml
 docker pull jinvic/ecmn:latest
 docker run -d -p 8080:8080 -v ./config.yaml:/app/config.yaml:ro jinvic/ecmn:latest
 ```
