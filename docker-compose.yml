@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  ecmn:
+    build: .
+    container_name: ecmn
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+    restart: unless-stopped

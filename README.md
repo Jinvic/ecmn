@@ -65,3 +65,20 @@ ecmn/
 ```bash
 go build -o ecmn.exe .
 ```
+
+## Docker
+
+### Docker Compose
+
+```bash
+docker-compose up -d
+```
+
+### Docker Hub
+
+镜像地址：`your-dockerhub-username/ecmn`
+
+```bash
+docker pull your-dockerhub-username/ecmn:latest
+docker run -d -p 8080:8080 -v ./config.yaml:/app/config.yaml:ro your-dockerhub-username/ecmn
+```
