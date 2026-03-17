@@ -4,46 +4,57 @@
 
 ## 快速开始
 
-### 配置
+### Docker Compose
+
+```bash
+curl -L https://raw.githubusercontent.com/Jinvic/ecmn/main/docker-compose.yml -o docker-compose.yml
+curl -L https://raw.githubusercontent.com/Jinvic/ecmn/main/config.yaml.example -o config.yaml
+docker-compose up -d
+```
+
+### Docker
+
+镜像地址：`Jinvic/ecmn`
+
+```bash
+docker pull Jinvic/ecmn:latest
+docker run -d -p 8080:8080 -v ./config.yaml:/app/config.yaml:ro Jinvic/ecmn:latest
+```
+
+### 配置项
 
 编辑 `config.yaml`：
 
 ```yaml
 server:
-  port: 8080
-  mode: release
+  port: 8080              # 服务端口
+  mode: release           # 运行模式 (debug/release)
 
 webhook:
-  secret: "your-webhook-secret"
+  secret: "your-webhook-secret"   # Webhook 签名密钥
 
 logging:
-  level: "info"
-  format: "json"
+  level: "info"           # 日志级别 (debug/info/warn/error)
+  format: "json"          # 输出格式 (json/console)
 
 smtp:
-  host: "smtp.example.com"
-  port: 587
-  username: "noreply@example.com"
-  password: "smtp-password"
-  from: "noreply@example.com"
-  to:
+  host: "smtp.example.com"         # SMTP 服务器地址
+  port: 587                        # SMTP 端口
+  username: "noreply@example.com"  # SMTP 用户名
+  password: "smtp-password"        # SMTP 密码
+  from: "noreply@example.com"      # 发件人地址
+  to:                              # 收件人列表
     - "admin@example.com"
 
 api:
-  base_url: "http://localhost:3000"
-  token: "your-bearer-token"
-  timeout: 30
-```
-
-### 运行
-
-```bash
-./ecmn.exe
+  base_url: "http://localhost:3000"  # Ech0 API 地址
+  token: "your-bearer-token"         # API 访问 Token
+  timeout: 30                        # 请求超时时间(秒)
 ```
 
 ## 项目结构
 
-```
+```bash
 ecmn/
 ├── config/          # 配置加载
 ├── handlers/        # HTTP 处理器
@@ -57,28 +68,7 @@ ecmn/
 ├── services/        # 业务逻辑
 ├── doc/             # 文档
 ├── main.go
-└── config.yaml
-```
-
-## 构建
-
-```bash
-go build -o ecmn.exe .
-```
-
-## Docker
-
-### Docker Compose
-
-```bash
-docker-compose up -d
-```
-
-### Docker Hub
-
-镜像地址：`your-dockerhub-username/ecmn`
-
-```bash
-docker pull your-dockerhub-username/ecmn:latest
-docker run -d -p 8080:8080 -v ./config.yaml:/app/config.yaml:ro your-dockerhub-username/ecmn
+├── config.yaml
+├── Dockerfile
+└── docker-compose.yml
 ```
