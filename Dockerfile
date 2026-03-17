@@ -14,7 +14,6 @@ FROM alpine:latest
 WORKDIR /app
 
 COPY --from=builder /app/ecmn .
-COPY --from=builder /app/config.yaml .
 
 EXPOSE 8080
 
