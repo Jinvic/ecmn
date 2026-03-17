@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   ecmn:
-    build: .
+    image: jinvic/ecmn:latest
     container_name: ecmn
     ports:
       - "8080:8080"

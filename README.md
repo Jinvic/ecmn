@@ -14,11 +14,11 @@ docker-compose up -d
 
 ### Docker
 
-镜像地址：`Jinvic/ecmn`
+镜像地址：`jinvic/ecmn`
 
 ```bash
-docker pull Jinvic/ecmn:latest
-docker run -d -p 8080:8080 -v ./config.yaml:/app/config.yaml:ro Jinvic/ecmn:latest
+docker pull jinvic/ecmn:latest
+docker run -d -p 8080:8080 -v ./config.yaml:/app/config.yaml:ro jinvic/ecmn:latest
 ```
 
 ### 配置项
