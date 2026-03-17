@@ -2,9 +2,6 @@
 ecmn.exe
 *.exe
 
-# Go
-go.sum
-
 # IDE
 .idea/
 .vscode/
