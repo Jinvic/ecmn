@@ -19,7 +19,7 @@ docker-compose up -d
 ```bash
 curl -L https://raw.githubusercontent.com/Jinvic/ecmn/refs/heads/master/config.yaml.example -o config.yaml
 docker pull jinvic/ecmn:latest
-docker run -d -p 8080:8080 -v ./config.yaml:/app/config.yaml:ro jinvic/ecmn:latest
+docker run -d -p 8080:8080 -v ./config.yaml:/app/config.yaml:ro -e TZ=Asia/Shanghai jinvic/ecmn:latest
 ```
 
 ### 配置项
