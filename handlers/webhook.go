@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"ecmn/logger"
@@ -16,7 +17,7 @@ const (
 	HeaderTimestamp = "X-Ech0-Timestamp"
 )
 
-type WebhookHandler struct{
+type WebhookHandler struct {
 	mailService *services.MailService
 }
 
@@ -48,7 +49,15 @@ func (h *WebhookHandler) HandleWebhook(c *gin.Context) {
 	switch payload.Topic {
 	case models.TopicCommentCreated:
 		go func() {
-			if err := h.mailService.SendCommentNotificationEmail(); err != nil {
+			type PayloadRaw struct {
+				Comment models.Comment
+			}
+			var payloadRaw PayloadRaw
+			if err := json.Unmarshal(payload.PayloadRaw, &payloadRaw); err != nil {
+				logger.Error("Failed to unmarshal comment", logger.Err(err))
+				return
+			}
+			if err := h.mailService.SendCommentNotificationEmail(payloadRaw.Comment); err != nil {
 				logger.Error("Failed to send comment notification email", logger.Err(err))
 			}
 		}()

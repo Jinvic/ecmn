@@ -22,7 +22,7 @@ func New(baseURL, token string, timeout time.Duration) *Client {
 		token:   token,
 		timeout: timeout,
 		http: &http.Client{
-			Timeout: timeout * time.Second,
+			Timeout: timeout,
 		},
 	}
 }
@@ -53,7 +53,7 @@ func (c *Client) GetResource(uri string, result interface{}) error {
 		return fmt.Errorf("failed to decode response: %w", err)
 	}
 
-	if apiResp.Code != 0 {
+	if apiResp.Code != 1 {
 		return fmt.Errorf("api error: code=%d, message=%s", apiResp.Code, apiResp.Message)
 	}
 

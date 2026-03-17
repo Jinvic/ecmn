@@ -1,5 +1,7 @@
 package models
 
+import "encoding/json"
+
 const (
 	TopicUserCreated          = "user.created"
 	TopicUserUpdated          = "user.updated"
@@ -37,9 +39,9 @@ var ValidTopics = []string{
 }
 
 type WebhookPayload struct {
-	Topic      string      `json:"topic"`
-	EventName  string      `json:"event_name"`
-	PayloadRaw interface{} `json:"payload_raw"`
-	Metadata   interface{} `json:"metadata"`
-	OccurredAt int64       `json:"occurred_at"`
+	Topic      string          `json:"topic"`
+	EventName  string          `json:"event_name"`
+	PayloadRaw json.RawMessage `json:"payload_raw"`
+	Metadata   json.RawMessage `json:"metadata"`
+	OccurredAt int64           `json:"occurred_at"`
 }
