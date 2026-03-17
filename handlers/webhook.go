@@ -60,6 +60,7 @@ func (h *WebhookHandler) HandleWebhook(c *gin.Context) {
 			if err := h.mailService.SendCommentNotificationEmail(payloadRaw.Comment); err != nil {
 				logger.Error("Failed to send comment notification email", logger.Err(err))
 			}
+			logger.Info("Comment notification email sent", logger.String("comment_id", payloadRaw.Comment.ID))
 		}()
 	}
 
