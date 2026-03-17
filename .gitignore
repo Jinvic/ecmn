@@ -11,3 +11,6 @@ go.sum
 
 # OS
 .DS_Store
+
+# Config
+config.yaml

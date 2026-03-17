@@ -17,3 +17,8 @@ smtp:
   from: "noreply@example.com"
   to:
     - "admin@example.com"
+
+api:
+  base_url: "http://localhost:3000"
+  token: "your-bearer-token"
+  timeout: 30
